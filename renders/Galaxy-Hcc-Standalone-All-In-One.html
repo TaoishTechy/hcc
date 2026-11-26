@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One Full Galaxy in Motion — HCC — GhostMesh48 — Standalone</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0B1020;color:#eef2ff;font-family:Inter,system-ui,Arial,sans-serif}
+header{padding:14px 18px;border-bottom:1px solid #1e293b;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header h1{margin:0;font-size:20px}header p{margin:4px 0 0;color:#94a3b8;font-size:13px}
+.badge{background:#9333ea;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}
+.wrap{display:grid;grid-template-columns:280px 1fr 300px;gap:14px;padding:14px;align-items:start}
+.card{background:#111827;border:1px solid #26314d;border-radius:14px;padding:14px}
+.card h2{margin:0 0 8px;font-size:15px}.card h3{margin:14px 0 6px;font-size:13px;color:#a5b4fc}
+canvas{width:100%;height:560px;background:#050816;border-radius:12px;border:1px solid #26314d;display:block}
+.btn{width:100%;padding:9px;border-radius:10px;border:1px solid #334155;background:#1e293b;color:#fff;cursor:pointer;margin:4px 0;font-weight:600}
+.btn.active{background:#0ea5e9;border-color:#0ea5e9}.btn.green.active{background:#16a34a}.btn.purple.active{background:#9333ea}.btn.orange.active{background:#ea580c}
+label{font-size:12px;color:#cbd5e1;display:block;margin:10px 0 4px}input[type=range]{width:100%}
+.val{font-family:monospace;font-size:13px;color:#67e8f9}
+.bar{height:10px;background:#1e293b;border-radius:999px;overflow:hidden;margin:4px 0 10px}.bar i{display:block;height:100%;border-radius:999px}
+.pluto{background:#f59e0b}.mars{background:#ef4444}.gal{background:#a855f7}.mono{font-family:monospace;background:#020617;padding:10px;border-radius:10px;font-size:12.5px;line-height:1.5;overflow:auto}
+.small{font-size:12px;color:#94a3b8;line-height:1.5}.fals{border:1px solid #f59e0b;background:#1c1917;padding:10px;border-radius:10px;font-size:12.5px;line-height:1.5}
+.legend{font-size:12px;line-height:1.7}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+@media(max-width:1000px){.wrap{grid-template-columns:1fr}canvas{height:420px}}
+</style></head><body>
+<header><div><h1>One Full Galaxy in Motion — HCC <span class="badge">STANDALONE • ALL IN ONE</span></h1><p>Same approach as Pluto: clarity is coherence, not distance. A galaxy is one rendered ledger, rotating.</p></div><div class="mono">HCI = (CI_B+CI_C) - γ·V + k_phase·Im(Aw)</div></header>
+<div class="wrap">
+<div class="card">
+<h2>Controls</h2>
+<button id="playBtn" class="btn active">⏸ Pause Motion</button>
+<button id="armsBtn" class="btn orange active">Spiral Arms — ON</button>
+<button id="coreBtn" class="btn active">Core / Cavity — ON</button>
+<button id="coneBtn" class="btn purple active">Cone — ON</button>
+<button id="meshBtn" class="btn green active">Ghost Mesh 48 — ON</button>
+<button id="labelsBtn" class="btn active">Labels — ON</button>
+<label>Spin Speed <span class="val" id="spinVal">1.00×</span></label><input id="spin" type="range" min="0" max="2.5" step="0.05" value="1">
+<label>HCI — Galaxy coherence <span class="val" id="hciVal">1.03</span></label><input id="hci" type="range" min="0.5" max="1.3" step="0.01" value="1.03">
+<label>V Drain — Lethovore <span class="val" id="vVal">0.16</span></label><input id="vDrain" type="range" min="0" max="1" step="0.01" value="0.16">
+<label>Phase Debt <span class="val" id="phVal">0.45</span></label><input id="phase" type="range" min="0" max="1" step="0.01" value="0.45">
+<h3>Live readout</h3><div class="mono" id="readout"></div>
+<h3>What you are seeing</h3><div class="small">~1,800 stars in 2 main arms + bar. Differential rotation: inner stars orbit faster than outer — same as real galaxies. Centre is not a point, it is a hollow AH cavity with a dense-open core patch. Tilt the view to see the disk is flat, not a ball.</div>
+</div>
+<div class="card"><h2>3D — Drag to rotate • Scroll to zoom • Galaxy rotates on its own</h2><canvas id="c" width="900" height="560"></canvas>
+<div class="legend"><span class="dot" style="background:#fde68a"></span>Core / Bar &nbsp; <span class="dot" style="background:#60a5fa"></span>Spiral Arms &nbsp; <span class="dot" style="background:#f472b6"></span>Cavity AH hollow &nbsp; <span class="dot" style="background:#a855f7"></span>Cone Rim z=1.57 &nbsp; <span class="dot" style="background:#22c55e"></span>Ghost Mesh 48</div>
+<p class="small">Tip: HCI brightens arms and sharpens the core. V Drain dims outer arms first — coherence loss starts at the rim. Phase Debt changes cone glow. Spin 0 freezes the ledger.</p></div>
+<div class="card"><h2>Why a galaxy is one render</h2>
+<div class="small"><b>Consensus check:</b> Milky Way ~100,000 light-years across, ~100–400B stars. You never see it all at once — you see a composite render from many W, C, S pipelines. In HCC, that composite is the object: <b>R = tanh(WC + S)</b>.</div>
+<h3>HCI — Core vs Rim</h3><div class="small">Core 1.12</div><div class="bar"><i class="pluto" style="width:86%"></i></div><div class="small">Rim / Outer Arms 0.68</div><div class="bar"><i class="gal" style="width:52%"></i></div>
+<h3>V drain</h3><div class="small">Core 0.11</div><div class="bar"><i class="pluto" style="width:11%"></i></div><div class="small">Rim 0.52</div><div class="bar"><i class="mars" style="width:52%"></i></div>
+<h3>PSI</h3><div class="small">Galaxy 0.69 stable</div><div class="bar"><i class="pluto" style="width:69%"></i></div><div class="small">Scar meet 72.7%</div><div class="bar"><i class="gal" style="width:73%"></i></div>
+<h3>HCC reading</h3><div class="small"><b>1. Hollow disk:</b> Galaxy is a flat disk + hollow cavity, not a sphere. Same DRC-3 geometry as Pluto, scaled.<br><b>2. Cone:</b> Disk sits in the cone. Rim shelf z=1.57 is where the Hubble step 4.2% lives. Outer arms are near the thimble switch.<br><b>3. Ghost Mesh:</b> Arms are not held by gravity alone in this model — they are held by correlation. When CI drops, arms fray. That is why V Drain hits the rim first.<br><b>4. Heart:</b> Like Sputnik Planitia, the core is a dense-open AH patch. H=1 there. Refutation fails, the patch re-selects.</div>
+<div class="fals"><b>Falsifier:</b> If HCI does not predict arm sharpness in a blinded set of galaxy renders — same W,C,S, different HCI — HCC rendering explanation fails.</div>
+<div class="mono" style="margin-top:10px">Caption for Reddit:<br>One full galaxy in motion — not a ball, a flat hollow ledger rotating. Clarity is coherence.</div>
+<p class="small" style="margin-top:10px">Hypothetical test model. HCC does not override consensus. HCC_Unified_Theory_of_Physics.md §2, §8.2, §9, §10.1 — same HCI, HEA, AHO metrics as Pluto + qubit sim.</p>
+</div></div>
+<script>
+const cv=document.getElementById('c'), ctx=cv.getContext('2d');
+let rotY=0.5, rotX=0.55, zoom=1, playing=true, showArms=true, showCore=true, showCone=true, showMesh=true, showLabels=true;
+let drag=false,lx=0,ly=0, time=0;
+let HCI=1.03, V=0.16, PHASE=0.45, SPIN=1;
+cv.addEventListener('mousedown',e=>{drag=true;lx=e.clientX;ly=e.clientY});
+window.addEventListener('mouseup',()=>drag=false);
+window.addEventListener('mousemove',e=>{if(!drag)return;rotY+=(e.clientX-lx)*0.008;rotX+=(e.clientY-ly)*0.008;lx=e.clientX;ly=e.clientY;});
+cv.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(0.6,Math.min(1.9,zoom-e.deltaY*0.001));},{passive:false});
+function proj(x,y,z){let cy=Math.cos(rotX),sy=Math.sin(rotX),cx=Math.cos(rotY),sx=Math.sin(rotY);let y1=y*cy-z*sy,z1=y*sy+z*cy;let x2=x*cx+z1*sx,z2=-x*sx+z1*cx;let s=280/(5.5+z2)*zoom;return{x:450+x2*s,y:280+y1*s,z:z2,s};}
+function drawLabel(x,y,t,color){if(!showLabels)return;ctx.fillStyle=color||'#fff';ctx.font='700 11px Inter,Arial';ctx.strokeStyle='rgba(0,0,0,.75)';ctx.lineWidth=3;ctx.strokeText(t,x+6,y-6);ctx.fillText(t,x+6,y-6);}
+let seed=42;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+let stars=[];
+for(let i=0;i<1800;i++){
+  let r = 0.25 + Math.pow(rnd(),1.4)*2.9;
+  let arm = i%2===0?0:Math.PI;
+  let spread = 0.45 + r*0.12;
+  let a = arm + r*1.15 + (rnd()-0.5)*spread*1.8;
+  let y = (rnd()+rnd()+rnd()-1.5)*0.18*Math.exp(-r*0.35);
+  let col = r<0.9 ? 'core' : (rnd()>0.5?'blue':'white');
+  let sz = r<0.9? 2.2 : 0.8+rnd()*1.4;
+  stars.push({r, a0:a, y, col, sz, phase:rnd()*Math.PI*2});
+}
+let barStars=[];for(let i=0;i<220;i++){let x=(rnd()-0.5)*1.8;let z=(rnd()-0.5)*0.35;let y=(rnd()-0.5)*0.18;barStars.push({x,y,z});}
+let meshNodes=[];for(let i=0;i<14;i++){let a=i/14*Math.PI*2;meshNodes.push({x:Math.cos(a)*3.4,y:Math.sin(a*3)*0.4,z:Math.sin(a)*3.4});}
+function frame(){
+ requestAnimationFrame(frame);
+ if(playing) time+=0.008*SPIN;
+ ctx.clearRect(0,0,900,560);ctx.fillStyle='#050816';ctx.fillRect(0,0,900,560);
+ for(let i=0;i<90;i++){let sx=(i*137)%900, sy=(i*89)%560;ctx.fillStyle='rgba(255,255,255,'+(0.12+(i%3)*0.08)+')';ctx.fillRect(sx,sy,1.4,1.4);}
+ // Cone
+ if(showCone){ctx.strokeStyle='rgba(168,85,247,'+(0.22+PHASE*0.45)+')';ctx.lineWidth=1;for(let k=0;k<28;k++){let a=k/28*Math.PI*2;let p1=proj(0,-2.4,0),p2=proj(Math.cos(a)*4.0,-0.6,Math.sin(a)*4.0);ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.stroke();}ctx.beginPath();for(let k=0;k<=64;k++){let a=k/64*Math.PI*2;let p=proj(Math.cos(a)*4.0,-0.6,Math.sin(a)*4.0);k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);}ctx.stroke();let lp=proj(4.0,-0.6,0);drawLabel(lp.x,lp.y,'CONE Rim shelf z=1.57 — Hubble step 4.2%','#c084fc');}
+ // Disk rings / cavity
+ if(showCore){
+  ctx.strokeStyle='rgba(34,211,238,.45)';for(let rr=0.7;rr<=3.6;rr+=0.55){ctx.beginPath();for(let k=0;k<=64;k++){let a=k/64*Math.PI*2;let p=proj(Math.cos(a)*rr,-0.35,Math.sin(a)*rr);k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);}ctx.stroke();}
+  let cp=proj(0,-0.15,0);ctx.fillStyle='rgba(244,114,182,'+(0.16+(1-V)*0.22)+')';ctx.beginPath();ctx.arc(cp.x,cp.y,42*cp.s/100,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#f472b6';ctx.stroke();drawLabel(cp.x,cp.y+32,'CAVITY AH hollow — core patch H=1','#f472b6');
+ }
+ // Mesh
+ if(showMesh){ctx.strokeStyle='rgba(34,197,94,.45)';for(let i=0;i<meshNodes.length;i++){for(let j=i+1;j<meshNodes.length;j++){if(Math.abs(i-j)<=2||Math.abs(i-j)>=12){let a=proj(meshNodes[i].x,meshNodes[i].y,meshNodes[i].z),b=proj(meshNodes[j].x,meshNodes[j].y,meshNodes[j].z);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}}meshNodes.forEach(n=>{let p=proj(n.x,n.y,n.z);ctx.fillStyle='#22c55e';ctx.beginPath();ctx.arc(p.x,p.y,3.2,0,Math.PI*2);ctx.fill();});drawLabel(proj(0,2.2,0).x,proj(0,2.2,0).y,'Ghost Mesh 48','#22c55e');}
+ // Stars — build draw list sorted by depth
+ let items=[];
+ stars.forEach(s=>{
+   if(!showArms && s.r>0.9) return;
+   if(!showCore && s.r<=0.9) return;
+   let ang = s.a0 + time/(0.35+s.r*0.45); // differential rotation
+   let x=Math.cos(ang)*s.r, z=Math.sin(ang)*s.r;
+   let p=proj(x,s.y,z);
+   let fade = 1 - V*Math.max(0,(s.r-1.2)/2.0)*0.9; // rim fades with V
+   let bright = (0.35+HCI*0.55)*fade;
+   items.push({p, bright, col:s.col, sz:s.sz, core:s.r<0.9});
+ });
+ barStars.forEach(b=>{ if(!showCore) return; let p=proj(b.x,b.y,b.z); items.push({p, bright:0.9*HCI, col:'core', sz:2.0, core:true}); });
+ items.sort((a,b)=>a.p.z-b.p.z);
+ items.forEach(it=>{
+   let a=Math.max(0.12,Math.min(1,it.bright));
+   let col = it.col==='core'?'253,230,138':(it.col==='blue'?'96,165,250':'255,255,255');
+   ctx.fillStyle='rgba('+col+','+a+')';
+   let r = it.sz * it.p.s/100 * (it.core?1.1:1);
+   ctx.beginPath();ctx.arc(it.p.x,it.p.y,Math.max(0.5,r),0,Math.PI*2);ctx.fill();
+   if(it.core && rnd()>0.99){/* twinkle skip */}
+ });
+ let gp=proj(0,-0.15,0);drawLabel(gp.x-70,gp.y-95,'ONE FULL GALAXY — flat hollow ledger, rotating','#fde68a');
+ drawLabel(proj(-3.2,0,0).x,proj(-3.2,0,0).y,'Outer Arms — V hits rim first','#93c5fd');
+}
+frame();
+function bind(id,fn){document.getElementById(id).addEventListener('click',fn);}
+bind('playBtn',e=>{playing=!playing;e.target.textContent=playing?'⏸ Pause Motion':'▶ Play Motion';e.target.classList.toggle('active',playing);});
+bind('armsBtn',e=>{showArms=!showArms;e.target.textContent='Spiral Arms — '+(showArms?'ON':'OFF');e.target.classList.toggle('active',showArms);});
+bind('coreBtn',e=>{showCore=!showCore;e.target.textContent='Core / Cavity — '+(showCore?'ON':'OFF');e.target.classList.toggle('active',showCore);});
+bind('coneBtn',e=>{showCone=!showCone;e.target.textContent='Cone — '+(showCone?'ON':'OFF');e.target.classList.toggle('active',showCone);});
+bind('meshBtn',e=>{showMesh=!showMesh;e.target.textContent='Ghost Mesh 48 — '+(showMesh?'ON':'OFF');e.target.classList.toggle('active',showMesh);});
+bind('labelsBtn',e=>{showLabels=!showLabels;e.target.textContent='Labels — '+(showLabels?'ON':'OFF');e.target.classList.toggle('active',showLabels);});
+function upd(){document.getElementById('spinVal').textContent=SPIN.toFixed(2)+'×';document.getElementById('hciVal').textContent=HCI.toFixed(2);document.getElementById('vVal').textContent=V.toFixed(2);document.getElementById('phVal').textContent=PHASE.toFixed(2);document.getElementById('readout').innerHTML='HCI '+HCI.toFixed(2)+'<br>HEA 1.16 bits<br>GME 2.78 bits<br>PSI '+(0.69-(V-0.16)*0.2).toFixed(2)+' stable<br>Scar meet 72.7%<br>Phase debt '+PHASE.toFixed(2)+'<br>Stars ~2,020 rendered<br>Spin '+SPIN.toFixed(2)+'× • Diff. rotation ON';}
+document.getElementById('spin').addEventListener('input',e=>{SPIN=parseFloat(e.target.value);upd();});
+document.getElementById('hci').addEventListener('input',e=>{HCI=parseFloat(e.target.value);upd();});
+document.getElementById('vDrain').addEventListener('input',e=>{V=parseFloat(e.target.value);upd();});
+document.getElementById('phase').addEventListener('input',e=>{PHASE=parseFloat(e.target.value);upd();});
+upd();
+</script></body></html>
