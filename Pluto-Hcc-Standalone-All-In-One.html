@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pluto HCC 3D — Standalone — GhostMesh48</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0B1020;color:#eef2ff;font-family:Inter,system-ui,Arial,sans-serif}
+header{padding:14px 18px;border-bottom:1px solid #1e293b;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header h1{margin:0;font-size:20px}header p{margin:4px 0 0;color:#94a3b8;font-size:13px}
+.badge{background:#0ea5e9;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}
+.wrap{display:grid;grid-template-columns:280px 1fr 300px;gap:14px;padding:14px;align-items:start}
+.card{background:#111827;border:1px solid #26314d;border-radius:14px;padding:14px}
+.card h2{margin:0 0 8px;font-size:15px}.card h3{margin:14px 0 6px;font-size:13px;color:#a5b4fc}
+canvas{width:100%;height:520px;background:#050816;border-radius:12px;border:1px solid #26314d;display:block}
+.btn{width:100%;padding:9px;border-radius:10px;border:1px solid #334155;background:#1e293b;color:#fff;cursor:pointer;margin:4px 0;font-weight:600}
+.btn.active{background:#0ea5e9;border-color:#0ea5e9}.btn.green.active{background:#16a34a}.btn.purple.active{background:#9333ea}
+label{font-size:12px;color:#cbd5e1;display:block;margin:10px 0 4px}input[type=range]{width:100%}
+.val{font-family:monospace;font-size:13px;color:#67e8f9}
+.bar{height:10px;background:#1e293b;border-radius:999px;overflow:hidden;margin:4px 0 10px}.bar i{display:block;height:100%;border-radius:999px}
+.pluto{background:#f59e0b}.mars{background:#ef4444}.mono{font-family:monospace;background:#020617;padding:10px;border-radius:10px;font-size:12.5px;line-height:1.5;overflow:auto}
+.small{font-size:12px;color:#94a3b8;line-height:1.5}.fals{border:1px solid #f59e0b;background:#1c1917;padding:10px;border-radius:10px;font-size:12.5px;line-height:1.5}
+.legend{font-size:12px;line-height:1.7}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+@media(max-width:1000px){.wrap{grid-template-columns:1fr}canvas{height:420px}}
+</style></head><body>
+<header><div><h1>Pluto HCC 3D — GhostMesh48 <span class="badge">STANDALONE • ALL IN ONE</span></h1><p>Pluto at 5B km looks clearer than Mars at 100 km — clarity is coherence, not distance. Hypothetical test model.</p></div><div class="mono">HCI = (CI_B+CI_C) - γ·V + k_phase·Im(Aw)</div></header>
+<div class="wrap">
+<div class="card">
+<h2>Controls</h2>
+<button id="playBtn" class="btn active">⏸ Pause Rotation</button>
+<button id="coneBtn" class="btn purple active">Cone — ON</button>
+<button id="diskBtn" class="btn active">Disk / Cavity — ON</button>
+<button id="meshBtn" class="btn green active">Ghost Mesh 48 — ON</button>
+<button id="labelsBtn" class="btn active">Labels — ON</button>
+<button id="marsBtn" class="btn active">Mars Contrast — ON</button>
+<label>HCI — Pluto clarity <span class="val" id="hciVal">1.03</span></label><input id="hci" type="range" min="0.5" max="1.3" step="0.01" value="1.03">
+<label>V Drain — Lethovore <span class="val" id="vVal">0.16</span></label><input id="vDrain" type="range" min="0" max="1" step="0.01" value="0.16">
+<label>Phase Debt <span class="val" id="phVal">0.45</span></label><input id="phase" type="range" min="0" max="1" step="0.01" value="0.45">
+<h3>Live readout</h3><div class="mono" id="readout">HCI 1.03<br>HEA 1.16 bits<br>GME 2.78 bits<br>PSI 0.69 stable<br>Scar meet 72.7%<br>Phase debt 0.45<br>Polytope σ ≤ 5.3% • ρ ≤ 0.95</div>
+<h3>Reference</h3><div class="small">Procedural Pluto in this file: mottled brown/tan, pale heart Sputnik Planitia / Tombaugh Regio lower-right, dark Cthulhu Macula left. No external image — all drawn in canvas.</div>
+</div>
+<div class="card"><h2>3D — Drag to rotate • Scroll to zoom</h2><canvas id="c" width="900" height="520"></canvas>
+<div class="legend"><span class="dot" style="background:#f59e0b"></span>Pluto &nbsp; <span class="dot" style="background:#22d3ee"></span>Hollow Disk &nbsp; <span class="dot" style="background:#f472b6"></span>Cavity AH &nbsp; <span class="dot" style="background:#a855f7"></span>Cone Rim z=1.57 &nbsp; <span class="dot" style="background:#22c55e"></span>Ghost Mesh 48 &nbsp; <span class="dot" style="background:#ef4444"></span>Mars</div>
+<p class="small">Tip: HCI slider brightens Pluto and sharpens the heart. V Drain makes Mars dimmer/blurrier and cavity glow weaker. Phase Debt changes cone glow.</p></div>
+<div class="card"><h2>Why Pluto wins — coherence, not distance</h2>
+<div class="small"><b>Consensus check:</b> Earth–Pluto ~4.9B km, camera–Pluto 12,500 km. Earth–Mars ~55M km, camera–Mars ~300 km. Meme mixes Earth-distance with camera-distance.</div>
+<h3>HCI — Pluto vs Mars</h3><div class="small">Pluto 1.03</div><div class="bar"><i class="pluto" style="width:79%"></i></div><div class="small">Mars 0.42</div><div class="bar"><i class="mars" style="width:32%"></i></div>
+<h3>V drain</h3><div class="small">Pluto 0.16</div><div class="bar"><i class="pluto" style="width:16%"></i></div><div class="small">Mars 0.78</div><div class="bar"><i class="mars" style="width:78%"></i></div>
+<h3>PSI</h3><div class="small">Pluto 0.69</div><div class="bar"><i class="pluto" style="width:69%"></i></div><div class="small">Mars 0.31</div><div class="bar"><i class="mars" style="width:31%"></i></div>
+<h3>Scar meet</h3><div class="small">Pluto 72.7%</div><div class="bar"><i class="pluto" style="width:73%"></i></div><div class="small">Mars 38%</div><div class="bar"><i class="mars" style="width:38%"></i></div>
+<h3>HCC</h3><div class="small">R = tanh(WC + S). R is the image you get. Change W, C, S and the same planet gives a different R. Pluto R was one clean single-pass low-noise system. Mars R in the meme is multi-render, atmosphere-through.<br><br><b>Heart = dense-open AH patch:</b> Sputnik Planitia, H=1, refutation fails. Cthulhu Macula next to it is high-V, low-CI.</div>
+<div class="fals"><b>Falsifier:</b> If same W,C,S still shows Pluto clearer at same camera distance, HCC rendering explanation fails.</div>
+<div class="mono" style="margin-top:10px">Caption for Reddit:<br>Pluto at 5B km looking clearer than Mars at 100 km — because clarity is coherence, not distance.</div>
+<p class="small" style="margin-top:10px">Hypothetical test model. Earth is an oblate spheroid. HCC does not override consensus. HCC_Unified_Theory_of_Physics.md §2, §8.2, §9, §10.1</p>
+</div></div>
+<script>
+const cv=document.getElementById('c'), ctx=cv.getContext('2d');
+let rotY=0.4, rotX=0.35, zoom=1, playing=true, showCone=true, showDisk=true, showMesh=true, showLabels=true, showMars=true;
+let drag=false, lx=0, ly=0;
+let HCI=1.03, V=0.16, PHASE=0.45;
+cv.addEventListener('mousedown',e=>{drag=true;lx=e.clientX;ly=e.clientY});
+window.addEventListener('mouseup',()=>drag=false);
+window.addEventListener('mousemove',e=>{if(!drag)return;rotY+=(e.clientX-lx)*0.008;rotX+=(e.clientY-ly)*0.008;lx=e.clientX;ly=e.clientY;});
+cv.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(0.6,Math.min(1.8,zoom-e.deltaY*0.001));},{passive:false});
+function proj(x,y,z){let cy=Math.cos(rotX),sy=Math.sin(rotX),cx=Math.cos(rotY),sx=Math.sin(rotY);let y1=y*cy-z*sy,z1=y*sy+z*cy;let x2=x*cx+z1*sx,z2=-x*sx+z1*cx;let s=380/(4.2+z2)*zoom;return{x:450+x2*s,y:260+y1*s,z:z2,s}; }
+function drawLabel(x,y,t,color){if(!showLabels)return;ctx.fillStyle=color||'#fff';ctx.font='700 11px Inter,Arial';ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=3;ctx.strokeText(t,x+6,y-6);ctx.fillText(t,x+6,y-6);}
+let seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+let spots=[];for(let i=0;i<110;i++){let u=rnd()*2-1, th=rnd()*Math.PI*2, r=Math.sqrt(1-u*u);let x=r*Math.cos(th),y=u,z=r*Math.sin(th);let kind='tan';if(x>0.15&&y<-0.15&&z>0)kind='heart';else if(x<-0.25)kind='dark';else if(rnd()>0.7)kind='light';spots.push({x,y,z,kind});}
+let meshNodes=[];for(let i=0;i<12;i++){let a=i/12*Math.PI*2;meshNodes.push({x:Math.cos(a)*1.75,y:Math.sin(a*2)*0.5,z:Math.sin(a)*1.75});}
+function frame(){requestAnimationFrame(frame);if(playing)rotY+=0.0025;ctx.clearRect(0,0,900,520);
+ctx.fillStyle='#050816';ctx.fillRect(0,0,900,520);
+for(let i=0;i<80;i++){let sx=(i*137)%900, sy=(i*89)%520;ctx.fillStyle='rgba(255,255,255,'+(0.15+(i%3)*0.1)+')';ctx.fillRect(sx,sy,1.5,1.5);}
+let cx0=proj(0,0,0);
+// Cone
+if(showCone){ctx.strokeStyle='rgba(168,85,247,'+(0.25+PHASE*0.5)+')';ctx.lineWidth=1;for(let k=0;k<24;k++){let a=k/24*Math.PI*2;let p1=proj(0,-1.9,0),p2=proj(Math.cos(a)*2.8,-0.2,Math.sin(a)*2.8);ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.stroke();}ctx.beginPath();for(let k=0;k<=48;k++){let a=k/48*Math.PI*2;let p=proj(Math.cos(a)*2.8,-0.2,Math.sin(a)*2.8);k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);}ctx.stroke();let lp=proj(2.8,-0.2,0);drawLabel(lp.x,lp.y,'CONE Rim shelf z=1.57 — Hubble step 4.2%','#c084fc');}
+// Disk
+if(showDisk){ctx.strokeStyle='rgba(34,211,238,.7)';for(let rr=1.1;rr<=2.25;rr+=0.28){ctx.beginPath();for(let k=0;k<=64;k++){let a=k/64*Math.PI*2;let p=proj(Math.cos(a)*rr,-1.9,Math.sin(a)*rr);k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);}ctx.stroke();}let dp=proj(2.25,-1.9,0);drawLabel(dp.x,dp.y,'Hollow Disk R=6371 km / Rin=6321 km','#22d3ee');ctx.fillStyle='rgba(244,114,182,'+(0.18+(1-V)*0.25)+')';let cp=proj(0,-1.9,0);ctx.beginPath();ctx.arc(cp.x,cp.y,52*cp.s/110,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#f472b6';ctx.stroke();drawLabel(cp.x,cp.y+40,'CAVITY AH hollow','#f472b6');}
+// Mesh
+if(showMesh){ctx.strokeStyle='rgba(34,197,94,.55)';for(let i=0;i<meshNodes.length;i++){for(let j=i+1;j<meshNodes.length;j++){if(Math.abs(i-j)<=2||Math.abs(i-j)>=10){let a=proj(meshNodes[i].x,meshNodes[i].y,meshNodes[i].z),b=proj(meshNodes[j].x,meshNodes[j].y,meshNodes[j].z);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}}
+meshNodes.forEach(n=>{let p=proj(n.x,n.y,n.z);ctx.fillStyle='#22c55e';ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,Math.PI*2);ctx.fill();});let mp=proj(0,1.75,0);drawLabel(mp.x,mp.y,'Ghost Mesh 48','#22c55e');}
+// Mars
+if(showMars){let m=proj(2.65,1.25,-1.5);let op=Math.max(0.18,1-V*0.7);ctx.fillStyle='rgba(239,68,68,'+op+')';ctx.beginPath();ctx.arc(m.x,m.y,26*m.s/110,0,Math.PI*2);ctx.fill();ctx.fillStyle='rgba(0,0,0,.25)';ctx.beginPath();ctx.arc(m.x-8,m.y-6,10,0,Math.PI*2);ctx.fill();drawLabel(m.x,m.y,'Mars 100 km render — low HCI, high V','#fca5a5');}
+// Pluto sphere base
+let pp=proj(0,0,0);let R=110*pp.s/110*zoom;let bright=0.55+HCI*0.45;
+let g=ctx.createRadialGradient(pp.x-R*0.35,pp.y-R*0.35,R*0.1,pp.x,pp.y,R);g.addColorStop(0,'rgba(255,236,190,'+bright+')');g.addColorStop(0.55,'rgba(196,154,108,'+bright+')');g.addColorStop(1,'rgba(120,82,50,'+bright+')');ctx.fillStyle=g;ctx.beginPath();ctx.arc(pp.x,pp.y,R,0,Math.PI*2);ctx.fill();
+// spots
+spots.forEach(s=>{let cy=Math.cos(rotX),sy=Math.sin(rotX),cx=Math.cos(rotY),sx=Math.sin(rotY);let y1=s.y*cy-s.z*sy,z1=s.y*sy+s.z*cy;let x2=s.x*cx+z1*sx,z2=-s.x*sx+z1*cx;if(z2<-0.15)return;let px=pp.x+x2*R*0.92, py=pp.y+y1*R*0.92;if(s.kind==='heart'){ctx.fillStyle='rgba(255,246,220,'+(0.85*bright)+')';ctx.beginPath();ctx.ellipse(px,py,18,14,0.4,0,Math.PI*2);ctx.fill();}else if(s.kind==='dark'){ctx.fillStyle='rgba(60,35,20,'+(0.7*bright)+')';ctx.beginPath();ctx.ellipse(px,py,13,8,0,0,Math.PI*2);ctx.fill();}else if(s.kind==='light'){ctx.fillStyle='rgba(255,220,170,'+(0.5*bright)+')';ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);ctx.fill();}else{ctx.fillStyle='rgba(140,95,60,'+(0.45*bright)+')';ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);ctx.fill();}});
+// heart outline
+ctx.strokeStyle='rgba(255,255,255,.9)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(pp.x+R*0.18,pp.y+R*0.42);ctx.bezierCurveTo(pp.x+R*0.02,pp.y+R*0.18,pp.x+R*0.02,pp.y+R*0.05,pp.x+R*0.18,pp.y+R*0.18);ctx.bezierCurveTo(pp.x+R*0.34,pp.y+R*0.05,pp.x+R*0.34,pp.y+R*0.18,pp.x+R*0.18,pp.y+R*0.42);ctx.stroke();
+drawLabel(pp.x,pp.y-R-8,'PLUTO — Sputnik Planitia heart','#fde68a');
+}
+frame();
+function bind(id,fn){document.getElementById(id).addEventListener('click',fn);}
+bind('playBtn',e=>{playing=!playing;e.target.textContent=playing?'⏸ Pause Rotation':'▶ Play Rotation';e.target.classList.toggle('active',playing);});
+bind('coneBtn',e=>{showCone=!showCone;e.target.textContent='Cone — '+(showCone?'ON':'OFF');e.target.classList.toggle('active',showCone);});
+bind('diskBtn',e=>{showDisk=!showDisk;e.target.textContent='Disk / Cavity — '+(showDisk?'ON':'OFF');e.target.classList.toggle('active',showDisk);});
+bind('meshBtn',e=>{showMesh=!showMesh;e.target.textContent='Ghost Mesh 48 — '+(showMesh?'ON':'OFF');e.target.classList.toggle('active',showMesh);});
+bind('labelsBtn',e=>{showLabels=!showLabels;e.target.textContent='Labels — '+(showLabels?'ON':'OFF');e.target.classList.toggle('active',showLabels);});
+bind('marsBtn',e=>{showMars=!showMars;e.target.textContent='Mars Contrast — '+(showMars?'ON':'OFF');e.target.classList.toggle('active',showMars);});
+function upd(){document.getElementById('hciVal').textContent=HCI.toFixed(2);document.getElementById('vVal').textContent=V.toFixed(2);document.getElementById('phVal').textContent=PHASE.toFixed(2);document.getElementById('readout').innerHTML='HCI '+HCI.toFixed(2)+'<br>HEA 1.16 bits<br>GME 2.78 bits<br>PSI '+(0.69-(V-0.16)*0.2).toFixed(2)+' stable<br>Scar meet 72.7%<br>Phase debt '+PHASE.toFixed(2)+'<br>Polytope σ ≤ 5.3% • ρ ≤ 0.95';}
+document.getElementById('hci').addEventListener('input',e=>{HCI=parseFloat(e.target.value);upd();});
+document.getElementById('vDrain').addEventListener('input',e=>{V=parseFloat(e.target.value);upd();});
+document.getElementById('phase').addEventListener('input',e=>{PHASE=parseFloat(e.target.value);upd();});
+upd();
+</script></body></html>
