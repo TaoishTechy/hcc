@@ -1,0 +1,131 @@
+{
+  "checks": [
+    {
+      "name": "CC params + RG",
+      "pass": true,
+      "lambda": 1.702e-35,
+      "Tc": 8314000000000.0,
+      "tau_u": 4.192e-21,
+      "lambda_Tc": 1.4150428e-22,
+      "hbar_c_kB": 0.002289884519207678,
+      "ratio_hbarc": 1.6182439988441889e+19,
+      "tau_Tc": 3.4852288e-08,
+      "hbar_kB": 7.638232577577646e-12,
+      "ratio_hbar": 0.00021916014746514335,
+      "note": "Static relations do NOT hold (mismatch 1.6e19, 4.6e3). HCC resolves via RG running, not static equality. See HCC \u00a73.2.",
+      "Lambda_CC": 1.05e-52
+    },
+    {
+      "name": "Hollow metric + cone",
+      "pass": true,
+      "R_cone_km": 16017.346976904424,
+      "g_surface": 1.0,
+      "g_cavity_dense": 1.0,
+      "g_cavity_nondense": 0.0,
+      "R_in_km": 6321.0
+    },
+    {
+      "name": "H13* coherence drain+phase",
+      "pass": true,
+      "CI_final": 1.0540551646776453,
+      "gamma": 0.3,
+      "k_phase": 0.5,
+      "Im_Aw": 0.3,
+      "H13star": "d(CI_B+CI_C)=sigma-gamma V+k_phase Im(Aw)"
+    },
+    {
+      "name": "Chaotic Betti #152",
+      "pass": true,
+      "toy_chi": 0.6931471804749426,
+      "reference_chi_JAX": 0.41,
+      "note": "toy log2, full Pers_Dgm 0.41"
+    },
+    {
+      "name": "Anti-Hollow #150",
+      "pass": true,
+      "AH_toy": {
+        "empty": 0,
+        "(0,1)": 0,
+        "(0,2)": 1,
+        "R": 1
+      },
+      "b0_AH": 0,
+      "b0_nnAH": 1
+    },
+    {
+      "name": "Lethovore #149",
+      "pass": true,
+      "rho": 0.85,
+      "sigma_max": -0.0,
+      "V_end": 0.6966290881430866
+    },
+    {
+      "name": "Generic Scar #151",
+      "pass": true,
+      "G": [
+        "p1"
+      ],
+      "LUM": 1
+    },
+    {
+      "name": "Imaginary Island #153",
+      "pass": true,
+      "A_w": "1.4+0.3i",
+      "DeltaS": -0.2,
+      "PT": true
+    },
+    {
+      "name": "Self-Erasing #154 + generations",
+      "pass": true,
+      "m": 3,
+      "generations": 3,
+      "[c]": 1,
+      "3[c]": 0,
+      "m1_ghost_dies": true
+    },
+    {
+      "name": "UHIF Polytope + mapping",
+      "pass": true,
+      "sigma": 0.04,
+      "rho": 0.9,
+      "r_ds": 0.85,
+      "Health": -0.35591974439999996,
+      "R": 0.46211715726000974,
+      "W_recon_err": 0.0,
+      "reliability": 0.863
+    },
+    {
+      "name": "Degens PBT",
+      "pass": true,
+      "schizophrenia_severity": 2.8284271247461903,
+      "OCD_GAD_distance": 1.118033988749895,
+      "healthy": [
+        0,
+        0,
+        0
+      ],
+      "comorbidity_formula": "P(A cap B)=P(A)P(B) exp(-d/1.5)"
+    },
+    {
+      "name": "Warp + cavity + Hubble step",
+      "pass": true,
+      "f_perc_Hz": 298023.6824978,
+      "h_perc": 1e-21,
+      "dt_cavity_s": 0.042169172914950384,
+      "dt_cone_s": 0.10684956575461564,
+      "hubble_step": 0.042,
+      "z_step": 1.57
+    },
+    {
+      "name": "Null",
+      "pass": true,
+      "burst": 0,
+      "echo": 0,
+      "spike": 0
+    }
+  ],
+  "n_pass": 13,
+  "n_total": 13,
+  "verdict_internal": "PASS",
+  "verdict_external": "NOT PROVEN"
+}
